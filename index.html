@@ -90,7 +90,9 @@ function renderStudent(r){let s=state.students.find(x=>x.userId===current.id),c=
 function renderSubadmin(r){r.innerHTML=`<div class="panel"><h2>Subadmin Portal</h2><p>Sub-admin permissions and management screens need to be implemented before use.</p></div>`}
 async function startRenderSync(){try{const remote=await apiState();state={...structuredClone(defaults),...remote,admin:{...defaults.admin,...remote.admin},settings:{...defaults.settings,...remote.settings},lastIds:{...defaults.lastIds,...remote.lastIds}};serverReady=true;renderPublic();if(current)renderDashboard();console.info('Render cloud database connected');}catch(e){serverReady=false;console.error(e);const n=document.createElement('div');n.className='notice error';n.style.cssText='position:fixed;bottom:12px;left:12px;right:12px;z-index:100';n.textContent='Server connection pending. Data save karne se pehle internet/server connection check karein.';document.body.appendChild(n)}}
 renderPublic();startRenderSync();setInterval(async()=>{if(!serverReady||current)return;try{const remote=await apiState();state={...state,...remote};renderPublic()}catch(e){}},10000);
-
+function renderTab(tabName) {
+    console.log("Tab changed to:", tabName);
+}
 </script>
 </body>
 </html>
